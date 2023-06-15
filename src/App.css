@@ -32,6 +32,10 @@
   background-color: #0056b3;
 }
 
+.message {
+  text-align: center;
+}
+
 .title {
   margin-top: 20px;
   margin-bottom: 0;
