@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './App.css'
 
 function NFTVerification() {
   const [address, setAddress] = useState('');
@@ -24,7 +25,8 @@ const verifyOwnership = async () => {
 };
 return (
     <div>
-      <h1>NFT Ownership Verification</h1>
+      <h1 className='title'>NFT Ownership Verification</h1>
+      <p>Input NFT token ID and contract address below to see recent transaction price.</p>
       <div className='inputContainer'>
         <input type="text" placeholder="Wallet Address" onChange={(e) => setAddress(e.target.value)} />
         <input type="text" placeholder="Contract Address" onChange={(e) => setContract(e.target.value)} />
