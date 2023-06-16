@@ -36,6 +36,19 @@
   text-align: center;
 }
 
+.errorMessage {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+
+.successMessage {
+  text-align: center;
+  color: green;
+  font-weight: bold;
+}
+
+
 .title {
   margin-top: 20px;
   margin-bottom: 0;
