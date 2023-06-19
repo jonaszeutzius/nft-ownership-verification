@@ -18,13 +18,14 @@ function NFTVerification() {
 
     try {
       const response = await axios.get(url, { headers });
+      console.log('API call 1:' , response)
       const filteredResults = response.data.results.filter(
         result => result.contract_address === contract
       );
       const collectionPromises = filteredResults.map(async result => {
         const collectionUrl = `http://localhost:8080/v1/collections/contract/${result.contract_address}?chain=${blockchain}`;
         const collectionResponse = await axios.get(collectionUrl, { headers });
-        console.log('collection response', collectionResponse);
+        console.log('API call 2:', collectionResponse);
         return {
           ...result,
           name: collectionResponse.data.name,
@@ -36,7 +37,7 @@ function NFTVerification() {
       setError(null); // Reset the error state on successful API call
     } catch (error) {
       console.error(error);
-      setError('Error: Verify that chain and wallet address are valid');
+      setError('Error: Verify that chain and wallet address are valid!');
       setData(null); // Reset the data state on API error
     }
   };
@@ -44,6 +45,12 @@ function NFTVerification() {
   const handleBlockchainChange = event => {
     setBlockchain(event.target.value);
   };
+
+  const checkData = (data) => {
+    const output = data ? data : 'N/A'
+    return output
+  }
+
 
   return (
     <div>
@@ -65,7 +72,7 @@ function NFTVerification() {
         <button onClick={verifyOwnership}>Verify Ownership</button>
       </div>
       {error && <p className="errorMessage">{error}</p>}
-      {(data !== null && data.results.length === 0) && <p className="errorMessage">Owner does not own NFT!</p>}
+      {(data !== null && data.results.length === 0) && <p className="errorMessage">Owner does not own NFT in provided contract address!</p>}
       {data !== null && data.results.length > 0 && (
         <div>
           <p className="successMessage">Collection found!</p>
@@ -85,12 +92,12 @@ function NFTVerification() {
             <tbody>
               {data.results.map((result, index) => (
                 <tr key={index} style={{ backgroundColor: index % 2 === 0 ? '#f2f2f2' : 'white' }}>
-                  <td style={{ padding: '10px', textAlign: 'left' }}>{result.name}</td>
-                  <td style={{ padding: '10px', textAlign: 'left' }}>{result.token_type}</td>
-                  <td style={{ padding: '10px', textAlign: 'left' }}>{result.contract_address}</td>
-                  <td style={{ padding: '10px', textAlign: 'left' }}>{result.total_tokens}</td>
-                  <td style={{ padding: '10px', textAlign: 'left' }}>{result.total_quantity}</td>
-                  <td style={{ padding: '10px', textAlign: 'left' }}>{}</td>
+                  <td style={{ padding: '10px', textAlign: 'left' }}>{checkData(result.name)}</td>
+                  <td style={{ padding: '10px', textAlign: 'left' }}>{checkData(result.token_type)}</td>
+                  <td style={{ padding: '10px', textAlign: 'left' }}>{checkData(result.contract_address)}</td>
+                  <td style={{ padding: '10px', textAlign: 'left' }}>{checkData(result.total_tokens)}</td>
+                  <td style={{ padding: '10px', textAlign: 'left' }}>{checkData(result.total_quantity)}</td>
+                  <td style={{ padding: '10px', textAlign: 'left' }}>{checkData(result.is_potential_spam)}</td>
                 </tr>
               ))}
             </tbody>
