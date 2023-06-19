@@ -7,7 +7,7 @@ function NFTVerification() {
   const [contract, setContract] = useState('');
   const [blockchain, setBlockchain] = useState('eth-main');
   const [data, setData] = useState(null);
-  const [error, setError] = useState(null); // New state for error message
+  const [error, setError] = useState(null);
 
   const verifyOwnership = async () => {
     const url = `http://localhost:8080/v1/collections/owner/${address}?chain=${blockchain}&page_size=25`;
@@ -18,7 +18,7 @@ function NFTVerification() {
 
     try {
       const response = await axios.get(url, { headers });
-      console.log('API call 1:' , response)
+      console.log('API call 1:', response);
       const filteredResults = response.data.results.filter(
         result => result.contract_address === contract
       );
@@ -34,11 +34,11 @@ function NFTVerification() {
       });
       const collectionsWithData = await Promise.all(collectionPromises);
       setData({ ...response.data, results: collectionsWithData });
-      setError(null); // Reset the error state on successful API call
+      setError(null);
     } catch (error) {
       console.error(error);
       setError('Error: Verify that chain and wallet address are valid!');
-      setData(null); // Reset the data state on API error
+      setData(null);
     }
   };
 
@@ -46,11 +46,7 @@ function NFTVerification() {
     setBlockchain(event.target.value);
   };
 
-  const checkData = (data) => {
-    const output = data ? data : 'N/A'
-    return output
-  }
-
+  const checkData = data => (data ? data : 'N/A');
 
   return (
     <div>
@@ -72,7 +68,9 @@ function NFTVerification() {
         <button onClick={verifyOwnership}>Verify Ownership</button>
       </div>
       {error && <p className="errorMessage">{error}</p>}
-      {(data !== null && data.results.length === 0) && <p className="errorMessage">Owner does not own NFT in provided contract address!</p>}
+      {data !== null && data.results.length === 0 && (
+        <p className="errorMessage">Owner does not own NFT in provided contract address!</p>
+      )}
       {data !== null && data.results.length > 0 && (
         <div>
           <p className="successMessage">Collection found!</p>
@@ -81,23 +79,23 @@ function NFTVerification() {
           <table>
             <thead>
               <tr style={{ backgroundColor: '#f2f2f2' }}>
-                <th style={{ padding: '10px', textAlign: 'left' }}>Name</th>
-                <th style={{ padding: '10px', textAlign: 'left' }}>Token Type</th>
-                <th style={{ padding: '10px', textAlign: 'left' }}>Contract Address</th>
-                <th style={{ padding: '10px', textAlign: 'left' }}>Total Tokens</th>
-                <th style={{ padding: '10px', textAlign: 'left' }}>Total Quantity</th>
-                <th style={{ padding: '10px', textAlign: 'left' }}>Spam</th>
+                <th>Name</th>
+                <th>Token Type</th>
+                <th>Contract Address</th>
+                <th>Total Tokens</th>
+                <th>Total Quantity</th>
+                <th>Spam</th>
               </tr>
             </thead>
             <tbody>
               {data.results.map((result, index) => (
                 <tr key={index} style={{ backgroundColor: index % 2 === 0 ? '#f2f2f2' : 'white' }}>
-                  <td style={{ padding: '10px', textAlign: 'left' }}>{checkData(result.name)}</td>
-                  <td style={{ padding: '10px', textAlign: 'left' }}>{checkData(result.token_type)}</td>
-                  <td style={{ padding: '10px', textAlign: 'left' }}>{checkData(result.contract_address)}</td>
-                  <td style={{ padding: '10px', textAlign: 'left' }}>{checkData(result.total_tokens)}</td>
-                  <td style={{ padding: '10px', textAlign: 'left' }}>{checkData(result.total_quantity)}</td>
-                  <td style={{ padding: '10px', textAlign: 'left' }}>{checkData(result.is_potential_spam)}</td>
+                  <td>{checkData(result.name)}</td>
+                  <td>{checkData(result.token_type)}</td>
+                  <td>{checkData(result.contract_address)}</td>
+                  <td>{checkData(result.total_tokens)}</td>
+                  <td>{checkData(result.total_quantity)}</td>
+                  <td>{checkData(result.is_potential_spam)}</td>
                 </tr>
               ))}
             </tbody>

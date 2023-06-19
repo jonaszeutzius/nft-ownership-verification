@@ -54,3 +54,8 @@
   margin-bottom: 0;
   text-align: center;
 }
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
