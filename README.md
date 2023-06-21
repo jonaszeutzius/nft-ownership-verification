@@ -76,14 +76,12 @@ We'll add a function `verifyOwnership` to our component that makes a GET request
 
     try {
       const response = await axios.get(url, { headers });
-      console.log('API call 1:', response);
       const filteredResults = response.data.results.filter(
         result => result.contract_address === contract
       );
       const collectionPromises = filteredResults.map(async result => {
         const collectionUrl = `https://api.blockspan.com/v1/collections/contract/${result.contract_address}?chain=${blockchain}`;
         const collectionResponse = await axios.get(collectionUrl, { headers });
-        console.log('API call 2:', collectionResponse);
         return {
           ...result,
           name: collectionResponse.data.name,
@@ -141,7 +139,6 @@ return (
       {data !== null && data.results.length > 0 && (
         <div>
           <p className="successMessage">Collection found!</p>
-          {console.log(data)}
           <h2>Details:</h2>
           <table>
             <thead>
