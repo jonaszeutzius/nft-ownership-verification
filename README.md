@@ -97,7 +97,9 @@ We'll add a function `verifyOwnership` to our component that makes a GET request
       setData(null);
     }
   };
-  ```
+```
+
+Don't forget to replace `YOUR_BLOCKSPAN_API_KEY` with your actual key!
 
 We will add two helper functions which help simplify our code:
 
