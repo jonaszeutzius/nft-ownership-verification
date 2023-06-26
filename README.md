@@ -36,7 +36,7 @@ In the `src` directory, create a new file `NFTVerification.js`. This will be our
 
 ## STEP 4: WRITING THE COMPONENT
 
-In `NFTVerification.js`, we'll import App.css, React and Axios, then set up our component with the necessary state variables for the wallet address, contract address, and data:
+In `NFTVerification.js`, we'll import App.css, React and Axios, then set up our component with the necessary state variables such as wallet address, contract address, and data:
 
 ```
 import React, { useState } from 'react';

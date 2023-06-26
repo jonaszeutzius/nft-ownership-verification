@@ -10,10 +10,10 @@ function NFTVerification() {
   const [error, setError] = useState(null);
 
   const verifyOwnership = async () => {
-    const url = `http://localhost:8080/v1/collections/owner/${address}?chain=${blockchain}&page_size=25`;
+    const url = `https://api.blockspan.com/v1/collections/owner/${address}?chain=${blockchain}&page_size=25`;
     const headers = {
       accept: 'application/json',
-      'X-API-KEY': '2jhzbqIWanB8puiqySBIWJVf6Ovp7oPW',
+      'X-API-KEY': 'YOUR_BLOCKSPAN_API_KEY',
     };
 
     try {
@@ -23,7 +23,7 @@ function NFTVerification() {
         result => result.contract_address === contract
       );
       const collectionPromises = filteredResults.map(async result => {
-        const collectionUrl = `http://localhost:8080/v1/collections/contract/${result.contract_address}?chain=${blockchain}`;
+        const collectionUrl = `https://api.blockspan.com/v1/collections/contract/${result.contract_address}?chain=${blockchain}`;
         const collectionResponse = await axios.get(collectionUrl, { headers });
         console.log('API call 2:', collectionResponse);
         return {
